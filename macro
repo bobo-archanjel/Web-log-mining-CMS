@@ -1,0 +1,34 @@
+Macro kód:
+Public Function RegExpMatch(input_range As Range, pattern As String, Optional match_case As Boolean = True) As Variant
+  Dim arRes() As Variant 'array to store the results
+  Dim iInputCurRow, iInputCurCol, cntInputRows, cntInputCols As Long 'index of the current row in the source range, index of the current column in the source range, count of rows, count of columns
+
+  On Error GoTo ErrHandl
+
+  RegExpMatch = arRes
+
+  Set regex = CreateObject("VBScript.RegExp")
+  regex.pattern = pattern
+  regex.Global = True
+  regex.MultiLine = True
+  If True = match_case Then
+    regex.ignorecase = False
+  Else
+    regex.ignorecase = True
+  End If
+
+  cntInputRows = input_range.Rows.Count
+  cntInputCols = input_range.Columns.Count
+  ReDim arRes(1 To cntInputRows, 1 To cntInputCols)
+
+  For iInputCurRow = 1 To cntInputRows
+    For iInputCurCol = 1 To cntInputCols
+      arRes(iInputCurRow, iInputCurCol) = regex.Test(input_range.Cells(iInputCurRow, iInputCurCol).Value)
+    Next
+  Next
+
+  RegExpMatch = arRes
+  Exit Function
+  ErrHandl:
+    RegExpMatch = CVErr(xlErrValue)
+End Function 
