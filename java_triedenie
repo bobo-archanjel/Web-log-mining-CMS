@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File file = new File("20230126-access.txt");
+        String result = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                if(sort(st) != null){
+                    result += sort(st) + "\n";
+                }}
+}catch (IOException error){}
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                if(sortBR(st) != null){
+                    result += sortBR(st) + "\n";}}
+        }catch (IOException error){}
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                if(sortLoo(st) != null){
+                    result += sortLoo(st) + "\n";}}
+        }catch (IOException error){}
+        File outputFile = new File("Logs.txt");
+        FileWriter fw = new FileWriter(outputFile);
+        fw.write(result);
+        System.out.println(result);}
+    public static String sort(String line) {
+        return (line.indexOf("brprod") == -1 && line.indexOf("joomla") == -1) ? line : null;}
+    public static String sortBR(String line) {
+        return (line.indexOf("brprod") != -1 && line.indexOf("joomla") == -1) ? line : null;}
+    public static String sortLoo(String line) {
+        return (line.indexOf("brprod") != -1 && line.indexOf("joomla") != -1) ? line : null;}} 
